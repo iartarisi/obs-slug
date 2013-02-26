@@ -38,6 +38,7 @@ def zypp_install(package):
     osc_getbinaries(dependency)
     zypp_install(package)
 
+
 def zypp_local(package):
     p = subprocess.Popen(["zypper", "--non-interactive", "install",
                           glob.glob(os.path.join(DOWNLOADS, package)
@@ -55,14 +56,14 @@ def zypp_local(package):
             print "Don't know how to deal with this error."
 
         osc_getbinaries(dependency)
-        zypp_local(package) # call zypp_local again after we have the dep
-
+        zypp_local(package)  # call zypp_local again after we have the dep
 
 
 def osc_getbinaries(package):
     print "Downloading %s with osc getbinaries..." % package
-    p = subprocess.Popen(["osc", "getbinaries", PROJECT, package, SYSTEM, ARCH],
-                         stdout=subprocess.PIPE)
+    p = subprocess.Popen(
+        ["osc", "getbinaries", PROJECT, package, SYSTEM, ARCH],
+        stdout=subprocess.PIPE)
     if p.wait() != 0:
         print "Couldn't download package."
 
